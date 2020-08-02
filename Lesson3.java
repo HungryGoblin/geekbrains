@@ -44,24 +44,27 @@ public class Lesson3 {
 
     // ИГРА
     public static void main(String[] args) {
-        while (gameStatus == STATUS_INIT) {
-            print(String.format("РАЗМЕР ПОЛЯ (%s): ", arrayList(FIELD_SIZE_ARRAY)));
-            initGame(SCANNER.nextInt());
-        }
-        Game:
+        NewGame:
         while (true) {
-            while (gameStatus == STATUS_IN_PROGRESS) {
-                if (firstHuman) humanTurn();
-                else aiTurn();
+            while (gameStatus == STATUS_INIT) {
+                print(String.format("РАЗМЕР ПОЛЯ (%s): ", arrayList(FIELD_SIZE_ARRAY)));
+                initGame(SCANNER.nextInt());
             }
-            while (gameStatus == STATUS_END_GAME) {
-                int playGame;
-                print("ПРОДОЛЖАЕМ ИГРАТЬ? (1 - продолжить / иначе - выйти): ");
-                playGame = SCANNER.nextInt();
-                if (playGame == 1) gameStatus = STATUS_INIT;
-                else break Game;
-            }
-        } // Game
+            Game:
+            while (true) {
+                while (gameStatus == STATUS_IN_PROGRESS) {
+                    if (firstHuman) humanTurn();
+                    else aiTurn();
+                }
+                while (gameStatus == STATUS_END_GAME) {
+                    int playGame;
+                    print("ПРОДОЛЖАЕМ ИГРАТЬ? (1 - продолжить / иначе - выйти): ");
+                    playGame = SCANNER.nextInt();
+                    if (playGame == 1) gameStatus = STATUS_INIT;
+                    else break NewGame;
+                }
+            } // Game
+        } // NewGame
         SCANNER.close();
     }
 
