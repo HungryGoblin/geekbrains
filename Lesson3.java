@@ -95,7 +95,7 @@ public class Lesson3 {
         return win;
     }
 
-    // проверка горизонталей
+    // проверка горизонталей и вертикалей
     private static boolean checkLine(char c, int shiftX, int shiftY) {
         boolean hLine = true, vLine = true;
         for (int i = shiftX; i < fieldSize; i++) {
