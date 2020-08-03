@@ -1,11 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
-/*
-Полностью разобраться с кодом;
-Переделать проверку победы, чтобы она не была реализована просто набором условий.
-* Попробовать переписать логику проверки победы, чтобы она работала для поля 5х5 и количества фишек 4.
-*** Доработать искусственный интеллект, чтобы он мог блокировать ходы игрока, и пытаться выиграть сам.
-* */
+
 
 public class Lesson3 {
 
@@ -31,12 +26,12 @@ public class Lesson3 {
     private static int maxTurns;
     private static int winCondition = 3;
     private static int minWinTurns = 0;
-    private static int turns = 0;
+    private static int turns = 1;
     private static int gameStatus = STATUS_INIT;
     private static boolean firstHumanInit = true;
     private static boolean firstHuman = true;
-    private static int shiftField = 0;
-    private static int shiftFieldNum = 0;
+    private static int shiftField = 1;
+
 
     // объекты
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -44,27 +39,24 @@ public class Lesson3 {
 
     // ИГРА
     public static void main(String[] args) {
-        NewGame:
+        Game:
         while (true) {
             while (gameStatus == STATUS_INIT) {
                 print(String.format("РАЗМЕР ПОЛЯ (%s): ", arrayList(FIELD_SIZE_ARRAY)));
                 initGame(SCANNER.nextInt());
             }
-            Game:
-            while (true) {
-                while (gameStatus == STATUS_IN_PROGRESS) {
-                    if (firstHuman) humanTurn();
-                    else aiTurn();
-                }
-                while (gameStatus == STATUS_END_GAME) {
-                    int playGame;
-                    print("ПРОДОЛЖАЕМ ИГРАТЬ? (1 - продолжить / иначе - выйти): ");
-                    playGame = SCANNER.nextInt();
-                    if (playGame == 1) gameStatus = STATUS_INIT;
-                    else break NewGame;
-                }
-            } // Game
-        } // NewGame
+            while (gameStatus == STATUS_IN_PROGRESS) {
+                if (firstHuman) humanTurn();
+                else aiTurn();
+            }
+            while (gameStatus == STATUS_END_GAME) {
+                int playGame;
+                print("СЫГРАЕМ ЕЩЕ? (1 - еще разик / иначе - наигрался): ");
+                playGame = SCANNER.nextInt();
+                if (playGame == 1) gameStatus = STATUS_INIT;
+                else break Game;
+            }
+        } // Game
         SCANNER.close();
     }
 
@@ -96,7 +88,7 @@ public class Lesson3 {
         CheckWin:
         for (int shiftX = 0; shiftX < shiftField; shiftX++) {
             for (int shiftY = 0; shiftY < shiftField; shiftY++) {
-                win = (checkLine(c, shiftX, shiftY) || checkDia(c, shiftX, shiftY));
+                win = (checkLine(c, shiftX, shiftY) || checkDia(c, shiftX));
                 if (win) break CheckWin;
             }
         }
@@ -105,24 +97,24 @@ public class Lesson3 {
 
     // проверка горизонталей
     private static boolean checkLine(char c, int shiftX, int shiftY) {
-        boolean hLine = false, vLine = false;
+        boolean hLine = true, vLine = true;
         for (int i = shiftX; i < fieldSize; i++) {
             for (int j = shiftY; j < fieldSize; j++) {
-                hLine ^= (field[i][i] == c);
-                vLine ^= (field[j][i] == c);
+                hLine = (field[i][i] == c);
+                vLine = (field[j][i] == c);
             }
         }
         return (hLine || vLine);
     }
 
     // проверка диагоналей
-    private static boolean checkDia(char c, int shiftX, int shiftY) {
-        boolean rDia = false, lDia = false;
+    private static boolean checkDia(char c, int shiftX) {
+        boolean rDia = true, lDia = true;
         for (int i = shiftX; i < winCondition; i++) {
-            rDia ^= (field[i][i + shiftY] == c);
-            lDia ^= (field[fieldSize - i - 1][i + shiftY] == c);
+            rDia &= (field[i][i] == c);
+            lDia &= (field[fieldSize - i - 1][i] == c);
         }
-        return (rDia || lDia) ;
+        return (rDia || lDia);
     }
 
     // проверяет корректность ввода координат
@@ -197,10 +189,9 @@ public class Lesson3 {
     private static void initGame(int sz) {
         if (!checkFieldSize(sz)) return;
         fieldSize = sz;
-        maxTurns = fieldSize * 4;
+        maxTurns = (int) Math.pow(fieldSize, 2);
         winCondition = STREAK_SIZE_ARRAY[arrayIndex(sz, FIELD_SIZE_ARRAY)];
-        shiftField = fieldSize - winCondition;
-        shiftFieldNum = (int)Math.pow(shiftField + 1, 2);
+        shiftField = fieldSize - winCondition + 1;
         minWinTurns = winCondition * 2 - 1;
         firstHumanInit = RANDOM.nextBoolean();
         field = new char[fieldSize][fieldSize];
@@ -208,7 +199,7 @@ public class Lesson3 {
             for (int y = 0; y < fieldSize; y++) field[x][y] = DOT_EMPTY;
         }
         firstHuman = firstHumanInit;
-        turns = 0;
+        turns = 1;
         gameStatus = STATUS_IN_PROGRESS;
         print(String.format("ПОЛЕ: %dx%d ПОБЕДА: %d в ряд%n", fieldSize, fieldSize, winCondition));
         print(String.format("НАЧИНАЕТ %s%n", firstHuman ? "человек " + DOT_HUMAN : "робот " + DOT_AI));
@@ -216,7 +207,8 @@ public class Lesson3 {
 
     // ход человека
     private static void humanTurn() {
-        int x; int y;
+        int x;
+        int y;
         printField();
         do {
             print("ячека по горизонтали (X):");
@@ -230,7 +222,8 @@ public class Lesson3 {
 
     // ход робота
     private static void aiTurn() {
-        int x; int y;
+        int x;
+        int y;
         do {
             x = RANDOM.nextInt(fieldSize);
             y = RANDOM.nextInt(fieldSize);
