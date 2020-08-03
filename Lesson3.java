@@ -6,10 +6,10 @@ public class Lesson3 {
 
     // глобальные параметры
     private static final char DOT_EMPTY = '\u2003';
-    private static final int[] FIELD_SIZE_ARRAY = {3, 5, 9};
-    private static final int[] STREAK_SIZE_ARRAY = {3, 4, 6};
     private static final char DOT_HUMAN = '\u263A';
     private static final char DOT_AI = '\u2620';
+    private static final int[] FIELD_SIZE_ARRAY = {3, 5, 9};
+    private static final int[] STREAK_SIZE_ARRAY = {3, 4, 6};
     private static final String[] GAME_RESULT = {"ПОБЕДИЛ ЧЕЛОВЕК", "ПОБЕДИЛ РОБОТ", "НИЧЬЯ"};
 
     // статусы игры
