@@ -1,8 +1,3 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -37,14 +32,14 @@ public class Lesson3 {
 
     // интеллект
     private static final boolean AI_LOGIC_ENABLED = true;
-    private static final int WEIGHT_GAP0 = 777;
-    private static final int WEIGHT_GAP1 = 150;
-    private static final int WEIGHT_GAP2 = 50;
+    private static final int WEIGHT_GAP0 = 77777777;
+    private static final int WEIGHT_GAP1 = 350;
+    private static final int WEIGHT_GAP2 = 75;
     private static final int WEIGHT_GAP3 = 25;
     private static final int WEIGHT_GAP4 = 5;
     private static final int WEIGHT_GAP5 = 3;
     private static final int WEIGHT_GAP6 = 1;
-    private static final int[] DEPTH_ARRAY = {1,2,2};
+    private static final int[] DEPTH_ARRAY = {5,4,3};
     private static final int[] WEIGHT_GAP =
             {WEIGHT_GAP0, WEIGHT_GAP1, WEIGHT_GAP2, WEIGHT_GAP3, WEIGHT_GAP4, WEIGHT_GAP5, WEIGHT_GAP6};
     private static int turnAiX;
@@ -140,7 +135,8 @@ public class Lesson3 {
     // проверяет корректность ввода координат
     private static boolean validHumanTurn(int x, int y) {
         boolean retVal = (x >= 0 && x < fieldSize) && (y >= 0 && y < fieldSize);
-        if (!retVal) System.out.print(String.format("** некорректные координаты %d %d! %n", x + 1, y + 1));
+        if (!retVal) System.out.print(String.format(
+                "** некорректные координаты %d %d! %n", x + 1, y + 1));
         else retVal = isEmptyCell(x, y);
         return retVal;
     }
@@ -148,32 +144,29 @@ public class Lesson3 {
     // проверяет ячейку на пустоту
     private static boolean isEmptyCell(int x, int y) {
         boolean retVal = (field[y][x] == DOT_EMPTY);
-        if (!retVal && firstHuman) System.out.print(String.format("** ячейка с координатами %d %d занята! %n", x + 1, y + 1));
+        if (!retVal && firstHuman) System.out.print(String.format(
+                "** ячейка с координатами %d %d занята! %n", x + 1, y + 1));
         return retVal;
-    }
-
-    // выводит поле
-    private static void printField() {
-        printField(field, true);
     }
 
 
     // выводит поле (для вывода отладки)
-    private static void printField(char[][] fld, boolean consoleOutput) {
-        print("+", consoleOutput);
+    private static void printField() {
+        System.out.print("+");
         for (int x = 0; x < fieldSize * 2 + 1; x++)
-            print((x % 2 == 0) ? String.valueOf(DOT_EMPTY) : String.valueOf(x / 2 + 1), consoleOutput);
-        print("\n", consoleOutput);
+            System.out.print((x % 2 == 0) ? String.valueOf(DOT_EMPTY) : String.valueOf(x / 2 + 1));
+        System.out.print("\n");
         for (int y = 0; y < fieldSize; y++) {
-            print(y + 1 + "|", consoleOutput);
+            System.out.print(y + 1 + "|");
             for (int x = 0; x < fieldSize; x++)
-                print(fld[y][x] + "|", consoleOutput);
-            print("\n", consoleOutput);
+                System.out.print(field[y][x] + "|");
+            System.out.print("\n");
         }
         for (int x = 0; x <= fieldSize * 2 + 1; x++)
-            print("-", consoleOutput);
-        print("\n", consoleOutput);
+            System.out.print("-");
+        System.out.print("\n");
     }
+
 
     // проверяет размер поля
     private static boolean checkFieldSize(int fs) {
@@ -203,22 +196,6 @@ public class Lesson3 {
         for (int j : a) arrayLst = String.format("%s %d", arrayLst, j);
         return arrayLst.trim();
     }
-
-    public static int maxVal(int a[]) {
-        return minMax(a, true);
-    }
-
-    public static int minVal(int a[]) {
-        return minMax(a, false);
-    }
-
-    // минимальное/максимальное значение
-    public static int minMax(int arr[], boolean tf) {
-        int mm = arr[0];
-        for (int i = 1; i < arr.length; i++) mm = tf ? (mm < arr[i] ? arr[i] : mm) : (mm > arr[i] ? arr[i] : mm);
-        return mm;
-    }
-
 
     // инициализирует игру
     private static void initGame(int sz) {
@@ -257,25 +234,18 @@ public class Lesson3 {
     // ход робота
     private static void aiTurn() {
         if (AI_LOGIC_ENABLED) {
-            int tx = -1, ty = -1, wt = 0;
             char[][] pField = new char[fieldSize][fieldSize];
             for (int y = 0; y < fieldSize; y++) System.arraycopy(field[y], 0, pField[y], 0, fieldSize);
             if (turns > 1) {
                 turnAiX = -1;
                 turnAiY = -1;
-SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-Date date = new Date(System.currentTimeMillis());
-print(formatter.format(date) + "\n", false);
-                weightPossibleTurns(DOT_AI, pField, 0, 0, maxDepth);
-date = new Date(System.currentTimeMillis());
-print(formatter.format(date) + "\n", false);
+                weightPossibleTurns(DOT_AI, pField, 0, 0, (turns < maxDepth)?maxDepth - turns: maxDepth);
                 if (turnAiX != -1 && turnAiY != -1) field[turnAiY][turnAiX] = DOT_AI;
                 else randomTurn();
             } else randomTurn();
         } else randomTurn();
         checkEndGame(DOT_AI);
     }
-
 
     // случайный ход
     private static void randomTurn() {
@@ -297,8 +267,6 @@ print(formatter.format(date) + "\n", false);
                 if (pField[y][x] == DOT_EMPTY) {
                     pField[y][x] = dot;
                     wt = weightLines(dot, pField);
-                    print(String.format("wt %s: %d x:%d y:%d depth[%d/%d]%n", dot, wt, x, y, depth, maxDepth), false);
-                    printField(pField, false);
                     if (dot == DOT_AI) {
                         if (wt > maxAi) {
                             maxAi = wt;
@@ -314,7 +282,7 @@ print(formatter.format(date) + "\n", false);
                         }
                         dot = DOT_AI;
                     }
-                    if (minAi > maxAi || wt >= WEIGHT_GAP0) {
+                    if (minAi > maxAi) {
                         pField[y][x] = DOT_EMPTY;
                         return;
                     }
@@ -325,8 +293,7 @@ print(formatter.format(date) + "\n", false);
         }
     }
 
-
-    // взвешивает линии
+    // взвешивает все линии
     private static int weightLines(char dot, char[][] pField) {
         int weight = 0;
         for (int shiftY = 0; shiftY < shiftField; shiftY++) {
@@ -367,19 +334,5 @@ print(formatter.format(date) + "\n", false);
                     (gapH < winCondition ? WEIGHT_GAP[gapH] : 0);
         }
         return weight;
-    }
-
-    private static void print(String s) {
-        print(s, true);
-    }
-
-    private static void print(String s, boolean consoleOutput) {
-        if (consoleOutput) System.out.print(s);
-        try (FileOutputStream fos = new FileOutputStream("log.txt", true)) {
-            byte[] buffer = s.getBytes();
-            fos.write(buffer, 0, buffer.length);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }
