@@ -167,7 +167,6 @@ public class Lesson3 {
         System.out.print("\n");
     }
 
-
     // проверяет размер поля
     private static boolean checkFieldSize(int fs) {
         return arrayContains(fs, FIELD_SIZE_ARRAY);
