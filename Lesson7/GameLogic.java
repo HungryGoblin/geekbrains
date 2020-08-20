@@ -203,7 +203,7 @@ public class GameLogic {
             for (int x = 0; x < fieldSize; x++) {
                 if (pField[y][x] == DOT_EMPTY) {
                     pField[y][x] = dot;
-                    if (weightTurn(dot, pField, x, y) >= WT_WIN) {
+                    if (weightTurn(dot, pField, x, y) >= winCondition - 1) {
                         turnAiX = x;
                         turnAiY = y;
                         return true;
@@ -272,10 +272,7 @@ public class GameLogic {
         for (char[] chars : streakLine) {
             int wt;
             int streak = 0;
-            int streakMax = 0;
             int dotNum = 0;
-            int dotMax = 0;
-            int maxLength = 0;
             StringBuilder line = new StringBuilder();
             for (int j = 0; j < fieldSize; j++) {
                 if (chars[j] == dot || chars[j] == DOT_EMPTY) {
@@ -283,21 +280,22 @@ public class GameLogic {
                     if (chars[j] == dot) {
                         streak++;
                         dotNum++;
-                    } else {
-                        if (streakMax < streak) streakMax = streak;
+                    } else
                         streak = 0;
-                    }
                 } else {
                     streak = 0;
-                    if (dotMax < dotNum) dotMax = dotNum;
                     dotNum = 0;
-                    if (maxLength < line.length()) maxLength = line.length();
                     line.setLength(0);
                 }
-                if (streakMax < streak) streakMax = streak;
-                if (maxLength < line.length()) maxLength = line.length();
-                if (streakMax == winCondition) return WT_WIN;
-                wt = (maxLength >= winCondition) ? dotMax : -1;
+                if (streak == winCondition)
+                    return WT_WIN;
+                if (line.length() >= winCondition) {
+                    if (streak == winCondition - 1) wt = 100;
+                    else if (streak == winCondition - 2) wt = 50;
+                    else wt = dotNum;
+                }
+                else
+                    wt = -1;
                 if (maxWt < wt) maxWt = wt;
             }
         }
