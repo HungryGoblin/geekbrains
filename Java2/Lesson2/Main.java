@@ -43,14 +43,14 @@ public class Main {
         int[] arrSize = new int[2];
         String[] line = s.split(String.valueOf(CRLF));
         arrSize[0] =  line.length;
-        if (arrSize[0] > ArraySizeException.ARRAY_SIZE_LIMIT)
+        if (arrSize[0] != ArraySizeException.ARRAY_SIZE_LIMIT)
             throw new ArraySizeException(String.valueOf(String.format ("%sx%s",
                     String.valueOf(arrSize[0]), String.valueOf(arrSize[1]))));
         retArr = new String[line.length][line[0].length()];
         for (int i = 0; i < line.length; i++) {
             String[] symbol = line[i].split(String.valueOf(SEP));
             arrSize[1] = symbol.length;
-            if (arrSize[1] > ArraySizeException.ARRAY_SIZE_LIMIT)
+            if (arrSize[1] != ArraySizeException.ARRAY_SIZE_LIMIT)
                 throw new ArraySizeException(String.format ("%sx%s",
                         String.valueOf(arrSize[0]), String.valueOf(arrSize[1])));
             retArr[i] = symbol;
