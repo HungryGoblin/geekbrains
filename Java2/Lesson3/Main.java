@@ -22,7 +22,7 @@ public class Main {
             }
             System.out.println(Arrays.deepToString(wordArray));
             WordMap wordMap = new WordMap(wordArray);
-            for (int i = 1; i < wordArray.length; i++) {
+            for (int i = 1; i < LIB.length; i++) {
                 System.out.printf("word: %s, entries: %d%n", wordArray[i], wordMap.numEntries(wordArray[i]));
             }
 
