@@ -16,10 +16,14 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            ArrayList<String> wordList = getWordSet(LIB, ARR_LEN);
-            System.out.println(wordList.toString());
-            for (int i = 0; i < LIB.length; i++) {
-                System.out.printf("%s: %d%n", LIB[i], numEntries(wordList, LIB[i]));
+            String[] wordArray = new String[ARR_LEN];
+            for (int i = 0; i < ARR_LEN; i++) {
+                wordArray[i] = LIB[RANDOM.nextInt(LIB.length - 1)];
+            }
+            System.out.println(Arrays.deepToString(wordArray));
+            WordMap wordMap = new WordMap(wordArray);
+            for (int i = 1; i < wordArray.length; i++) {
+                System.out.printf("word: %s, entries: %d%n", wordArray[i], wordMap.numEntries(wordArray[i]));
             }
 
             PhoneBook phoneBook = new PhoneBook();
@@ -38,19 +42,27 @@ public class Main {
         }
     }
 
-    private static ArrayList<String> getWordSet(String[] lib, int len) {
-        ArrayList<String> destSet = new ArrayList<String>();
-        for (int i = 0; i < len; i++) {
-            destSet.add(lib[RANDOM.nextInt(lib.length)]);
-        }
-        destSet.sort(ASCENDING_STRING);
-        return destSet;
+}
+
+class WordMap {
+    private HashMap<String, Integer> wordMap = new HashMap<>();
+
+    private void add (String str) {
+        Integer wordCount = wordMap.get(str);
+        if (wordCount == null) wordCount = new Integer(0);
+        wordMap.put(str, wordCount + 1);
     }
 
-    private static int numEntries(ArrayList<String> source, String target) {
-        return source.lastIndexOf(target) - source.indexOf(target) + 1;
+    public int numEntries (String str) {
+        return wordMap.get(str);
     }
-}
+
+    WordMap (String[] wordArray) {
+        for (int i = 0; i < wordArray.length; i++) {
+            add (wordArray[i]);
+        }
+    }
+};
 
 class PhoneBook {
 
