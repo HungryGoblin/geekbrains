@@ -48,18 +48,7 @@ public class Main {
     }
 
     private static int numEntries(ArrayList<String> source, String target) {
-        int size = source.size();
-        int idx = source.indexOf(target);
-        int entries = (idx >= 0) ? 1 : 0;
-        while (idx >= 0) {
-            if (idx >= size - 1) break;
-            if (source.get(idx).equals(source.get(idx + 1))) {
-                entries++;
-                idx++;
-            } else
-                break;
-        }
-        return entries;
+        return source.lastIndexOf(target) - source.indexOf(target) + 1;
     }
 }
 
