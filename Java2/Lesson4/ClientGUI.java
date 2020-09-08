@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.Socket;
 
-public class ClientGUI extends JFrame implements ActionListener, KeyListener, Thread.UncaughtExceptionHandler {
+public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler {
 
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
@@ -35,7 +35,6 @@ public class ClientGUI extends JFrame implements ActionListener, KeyListener, Th
     public static final String LOG_FILE = "client.log";
 
 
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -50,7 +49,7 @@ public class ClientGUI extends JFrame implements ActionListener, KeyListener, Th
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setSize(WIDTH, HEIGHT);
-//        log.setEditable(false);
+        log.setEditable(false);
         logFile = new Log(LOG_FILE);
         JScrollPane scrollUser = new JScrollPane(userList);
         JScrollPane scrollLog = new JScrollPane(log);
@@ -61,7 +60,6 @@ public class ClientGUI extends JFrame implements ActionListener, KeyListener, Th
         cbAlwaysOnTop.addActionListener(this);
         btnLogin.addActionListener(this);
         btnSend.addActionListener(this);
-        log.addKeyListener(this);
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -79,6 +77,21 @@ public class ClientGUI extends JFrame implements ActionListener, KeyListener, Th
         add(panelBottom, BorderLayout.SOUTH);
 
         setVisible(true);
+
+        tfMessage.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {}
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                e.getKeyCode();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (tfMessage.hasFocus()) sendMessage(tfMessage.getText(), userList.getSelectedValue());
+                }
+            }
+        });
+
     }
 
     private void connect(String host, int port, String user, String pass) {
@@ -94,7 +107,7 @@ public class ClientGUI extends JFrame implements ActionListener, KeyListener, Th
     private void sendMessage (String message, String destUser) {
         if (/*!connected ||*/ message == null || message.equals("")) return;
         message = String.format("Me > %s: %s", destUser, message);
-        log.append(message + "%n"); // сюда будем тянуть сообщения с сервера, а пока обновляем свои
+        log.append(String.format("%s%n", message)); // сюда будем тянуть сообщения с сервера, а пока обновляем свои
         logFile.append(message);
         tfMessage.setText("");
     }
@@ -113,19 +126,6 @@ public class ClientGUI extends JFrame implements ActionListener, KeyListener, Th
 //                    tfPassword.getText());
         } else {
             throw new RuntimeException("Unknown source: " + src);
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) { }
-
-    @Override
-    public void keyReleased(KeyEvent e) { }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (tfMessage.hasFocus()) sendMessage(tfMessage.getText(), userList.getSelectedValue());
         }
     }
 
