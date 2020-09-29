@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 //3. Большая задача:
@@ -24,41 +26,28 @@ abstract class Fruit {
     protected static float weight;
     private String name;
 
-    Fruit (String name) {
+    Fruit(String name) {
         this.name = name;
     }
 }
 
 class Apple extends Fruit {
-    Apple () {
-        super ("Apple");
+    Apple() {
+        super("Apple");
         weight = 1.0f;
     }
 }
 
 class Orange extends Fruit {
-    Orange () {
-        super ("Orange");
+    Orange() {
+        super("Orange");
         weight = 1.5f;
     }
 }
 
-class Box<T extends Fruit> {
+class Box<T extends Fruit> implements Comparable<Box> {
 
-    private ArrayList <T> fruits = new ArrayList<>();
-
-    public void put (T fruit) {
-        fruits.add(fruit);
-    }
-
-    public void put (Box box) {
-        if (this != box) {
-            for (int i = 0; i < box.count(); i++) {
-                this.put((T)box.get(i));
-            }
-            box = null;
-        }
-    }
+    private ArrayList<T> fruits = new ArrayList<>();
 
     public float getWeight() {
         if (fruits.size() > 0)
@@ -67,10 +56,33 @@ class Box<T extends Fruit> {
             return 0f;
     }
 
-    public boolean compare(Box<T> box) { return (this.getWeight() == box.getWeight()); }
+    @Override
+    public int compareTo(Box box) {
+        if (this.getWeight() > box.getWeight()) return -1;
+        else if (this.getWeight() < box.getWeight());
+        return 0;
+    }
 
-    public int count() { return fruits.size(); }
+    public int count() {
+        return fruits.size();
+    }
 
-    public T get(int num) { return fruits.get(num); }
+    public void put(T fruit) {
+        fruits.add(fruit);
+    }
+
+    public void put(Box box) {
+        if (this.compareTo(box) == 0) {
+            this.fruits.addAll(box.getAll());
+        }
+    }
+
+    public T get(int num) {
+        return fruits.get(num);
+    }
+
+    public ArrayList<T> getAll() {
+        return fruits;
+    }
 
 }
