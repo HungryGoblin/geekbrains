@@ -6,8 +6,8 @@ public class Main {
             DbProcessor conn = new DbProcessor();
             conn.setQueryResult("SELECT * FROM _user");
             System.out.println(conn.numResults());
-            UserTools.resetPassword("SpyderMan", "zzz");
-            UserTools.resetPassword("SpyderMan", "zzz", "yyy");
+            UserTools.resetPassword("SpyderMan", "abcdef12345");
+            UserTools.resetPassword("SpyderMan", "abcdef12345", "yyy");
         } catch (Exception e) {
             e.printStackTrace();
         }
