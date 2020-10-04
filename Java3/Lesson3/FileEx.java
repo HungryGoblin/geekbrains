@@ -1,4 +1,5 @@
 import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class FileEx extends File {
             for (long pointer = fileLen; pointer >= 0; pointer--) {
                 file.seek(pointer);
                 int data = file.read();
-                char chr = (char)data;
+                char chr = (char) data;
                 if (data == END_LINE && sb.length() > 0) {
                     stringList.add(sb.reverse().toString());
                     if (stringList.size() == num) break READ_FILE;

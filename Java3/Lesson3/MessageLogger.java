@@ -15,7 +15,7 @@ public class MessageLogger {
         }
     }
 
-    public static void writeMessage (String text) {
+    public static void writeMessage(String text) {
         try {
             file.writeLine(text);
         } catch (Exception e) {
