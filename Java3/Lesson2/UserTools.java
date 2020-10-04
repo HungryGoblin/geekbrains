@@ -32,7 +32,7 @@ public class UserTools {
     // admin reset
     public static void resetPassword(String login, @NotNull String password) throws Exception {
         try {
-            setUser(login, password);
+            setUser(login);
             dbProcessor.resultSet.last();
             resetPassword(dbProcessor.resultSet, password);
         } finally {

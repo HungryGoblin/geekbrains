@@ -1,3 +1,4 @@
+import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -11,7 +12,7 @@ public class CryptoTools {
     public static String getHash(String str) throws Exception {
         messageDigest.reset();
         messageDigest.update(str.getBytes(CODEPAGE));
-        return Integer.toHexString(messageDigest.hashCode());
+        return DatatypeConverter.printHexBinary(messageDigest.digest());
     }
 
     public static boolean checkHash(String str, String hash) throws Exception {
