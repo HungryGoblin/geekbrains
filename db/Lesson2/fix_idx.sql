@@ -3,7 +3,6 @@ ADD INDEX `idx_title` (`title` ASC);
 INSERT INTO `geodata`.`_countries` (`title`) VALUES ('NOT_DEFINED');
 
 ALTER TABLE `geodata`.`_regions` 
-CHANGE COLUMN `country_id` `country_id` INT(11) NOT NULL DEFAULT 236 ,
 ADD INDEX `title` (`title` ASC),
 ADD INDEX `fk_country_id_idx` (`country_id` ASC);
 ;
