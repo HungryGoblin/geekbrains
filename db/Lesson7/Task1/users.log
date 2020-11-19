@@ -1,0 +1,8 @@
+%	Andrey	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N					0	0	0	0	caching_sha2_password		N	2020-11-16 22:38:48	\N	N	N	N	\N	\N	\N	\N
+localhost	AndreyS	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	N	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y					0	0	0	0	caching_sha2_password		N	2020-11-16 23:09:51	\N	N	Y	Y	\N	\N	\N	\N
+localhost	Ivan	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N					0	0	0	0	caching_sha2_password		N	2020-11-16 23:08:38	\N	N	N	N	\N	\N	\N	\N
+localhost	goblin	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	N	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y					0	0	0	0	caching_sha2_password		N	2020-11-16 23:00:01	\N	N	Y	Y	\N	\N	\N	\N
+localhost	mysql.infoschema	Y	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N					0	0	0	0	caching_sha2_password	$A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED	N	2020-08-11 21:48:22	\N	Y	N	N	\N	\N	\N	\N
+localhost	mysql.session	N	N	N	N	N	N	N	Y	N	N	N	N	N	N	N	Y	N	N	N	N	N	N	N	N	N	N	N	N	N					0	0	0	0	caching_sha2_password	$A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED	N	2020-08-11 21:48:22	\N	Y	N	N	\N	\N	\N	\N
+localhost	mysql.sys	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N	N					0	0	0	0	caching_sha2_password	$A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED	N	2020-08-11 21:48:22	\N	Y	N	N	\N	\N	\N	\N
+localhost	root	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y	Y					0	0	0	0	caching_sha2_password	$A$005$p`kV9dD-? A77gJ\	mCU/UBA7c.P.PKRQDubveaQtLFNzVVfJHM91WB36RCNND	N	2020-08-11 21:48:27	\N	N	Y	Y	\N	\N	\N	\N
